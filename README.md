@@ -2,6 +2,8 @@
 
 A full-stack residential society maintenance and complaint management platform that allows residents to raise and track complaints while enabling administrators to manage complaints, priorities, overdue issues, notices, and reporting.
 
+**Live Demo:** [https://societyhub-akae.onrender.com](https://societyhub-akae.onrender.com)
+
 ---
 
 ## Features
