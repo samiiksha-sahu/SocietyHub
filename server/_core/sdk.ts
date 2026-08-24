@@ -211,19 +211,26 @@ class SDKServer {
       });
       const { openId, appId, name } = payload as Record<string, unknown>;
 
-      if (
-        !isNonEmptyString(openId) ||
-        !isNonEmptyString(appId) ||
-        !isNonEmptyString(name)
-      ) {
+      const resolvedOpenId = openId
+        ? String(openId)
+        : (payload as any)?.userId
+          ? String((payload as any).userId)
+          : (payload as any)?.id
+            ? String((payload as any).id)
+            : "local-user";
+
+      const resolvedAppId = (appId as string) || (payload as any)?.appId || "society-hub";
+      const resolvedName = (name as string) || (payload as any)?.name || (payload as any)?.email || "User";
+
+      if (!resolvedOpenId) {
         console.warn("[Auth] Session payload missing required fields");
         return null;
       }
 
       return {
-        openId,
-        appId,
-        name,
+        openId: resolvedOpenId,
+        appId: resolvedAppId,
+        name: resolvedName,
       };
     } catch (error) {
       console.warn("[Auth] Session verification failed", String(error));
